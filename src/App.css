@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Glory:wght@400&display=swap');
+
+:root {
+  --btnbg: #ffcc35;
+  /* overflow-y: hidden; */
+}
+
+a {
+  text-decoration: none;
+  /* color: var(--btnbg); */
+}
+
+
+body {
+  background-color: #F5F5F5 !important;
+}
+
+
+@media (max-width: 768px) {}

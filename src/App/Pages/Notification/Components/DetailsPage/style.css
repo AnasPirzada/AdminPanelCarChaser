@@ -1,0 +1,44 @@
+.crsl {
+  width: 550px;
+  margin: auto;
+}
+
+.carousel-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: 400px;
+  margin: auto;
+}
+
+.carousel-image-wrapper img {
+  width: 100%;
+  height: auto;
+}
+
+.thumb {
+  height: 50px !important;
+}
+.carousel-status{
+  display: none;
+}
+.carousel-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-arrows {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  z-index: 100;
+}
+
+.custom-arrows img {
+  width: 5%;
+  max-width: 30px; /* Set a maximum width for the arrows */
+}
