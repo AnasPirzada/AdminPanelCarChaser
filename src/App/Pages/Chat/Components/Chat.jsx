@@ -1,334 +1,314 @@
-import { React, useState } from "react";
-import { Row } from "react-bootstrap";
+import { React, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+const Message = ({ message, time, sent }) => {
+  return (
+    <Row>
+      <div
+        className={`w-${
+          sent ? '100' : '75'
+        } d-flex align-items-center justify-content-${sent ? 'end' : 'start'}`}
+      >
+        <div>
+          <img src='./PNG/UserImage.png' alt='' />
+        </div>
 
-const Chat = () =>
-{
-  const [ selectedUser, setSelectedUser ] = useState( 0 );
-
-  const users = [
-    {
-      name: "Ryan Renold",
-      picture: "./Chat Images/Germano.svg",
-    },
-    {
-      name: "John Knedy",
-      picture: "./Chat Images/Anna.svg",
-    },
-    {
-      name: "Anna Mulana",
-      picture: "./Chat Images/Paul.svg",
-    },
-  ];
-
-  const messages = [
-    [
-      {
-        message: "First message for Ryan Renold",
-        isOwner: false,
-      },
-      {
-        message: "Another message for Ryan Renold",
-        isOwner: true,
-      },
-    ],
-    [
-      {
-        message: "First message for Another User",
-        isOwner: false,
-      },
-      {
-        message: "Another message for Another User",
-        isOwner: true,
-      },
-    ],
-  ];
-
-  const handleUserClick = ( index ) =>
-  {
-    setSelectedUser( index );
-  };
-
-  const [ data, setData ] = useState( [
-    {
-      userIndex: 0,
-      messages: [
-        {
-          date: "December 12, 2023",
-          content: "How I Want to Ask May I ?",
-          time: "08:00 PM",
-        },
-      ],
-    },
-    {
-      userIndex: 1,
-      messages: [
-        {
-          date: "January 15, 2023",
-          content: "Another content for Another User",
-          time: "10:30 AM",
-        },
-      ],
-    },
-    {
-      userIndex: 2,
-      messages: [
-        {
-          date: "January 1, 2023",
-          content: " for Another User",
-          time: "10:03AM",
-        },
-      ],
-    },
-  ] );
-
-  const [ sentMessages, setSentMessages ] = useState( [
-    {
-      id: 1,
-      text: "Of course! We are very happy to hear from you, but how can we help you?",
-      timestamp: "08.00 PM", // Example timestamp
-    },
-    {
-      id: 1,
-      text: `Of course, we are.
-      How can I help you today?`,
-      timestamp: "08.00 PM", // Example timestamp
-    },
-  ] );
-
-  const [ message, setMessage ] = useState( "" );
-
-  const handleMessageChange = ( e ) =>
-  {
-    setMessage( e.target.value );
-  };
-
-  const handleSendMessage = () =>
-  {
-    if ( message.trim() !== "" )
-    {
-      const newMessage = {
-        id: Date.now(),
-        text: message,
-        timestamp: new Date().toLocaleString( "en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          hour12: true,
-        } ),
-      };
-
-      setSentMessages( [ ...sentMessages, newMessage ] );
-      setMessage( "" );
-    }
-  };
-  const selectedUserData = data.find( ( item ) => item.userIndex === selectedUser );
-
-  const renderedContent = selectedUserData
-    ? selectedUserData.messages.map( ( item, index ) => (
-      <div key={ index }>
         <div
-          className="ps-4 pt-5"
-          style={ {
-            backgroundColor: "white",
-            height: "90vh",
-            overflowY: "auto",
-          } }
+          className={`ms-3 d-flex flex-column justify-content-start align-items-center`}
         >
-          <div className="text-center m-auto w-75">
+          <div
+            className='p-2 rounded-3 '
+            style={{ backgroundColor: '#EBEBEB', width: 'auto' }}
+          >
             <p
-              className="p-3 rounded-4 m-auto"
-              style={ {
-                backgroundColor: "#F3F3F3",
-                color: "#757575",
-                width: "30%",
-              } }
+              style={{
+                color: '#000000',
+                fontSize: '14px',
+                textWrap: 'nowrap',
+                fontWeight: '400',
+              }}
             >
-              { item.date }
+              {message}
             </p>
           </div>
           <div>
-            { item.content && (
-              <div>
-                <p
-                  className="p-3 rounded-3"
-                  style={ {
-                    backgroundColor: "#FFFFFF",
-                    color: "#75818D",
-                    width: "30%",
-                  } }
-                >
-                  { item.content }
-                </p>
-
-                <p
-                  className="mt-2"
-                  style={ { color: "#BABABA", fontSize: "11.42px" } }
-                >
-                  { item.time }
-                </p>
-              </div>
-            ) }{ " " }
-          </div>
-          { sentMessages.map( ( msg, index ) => (
-            <div
-              key={ index } // Using index as a key, consider using a unique identifier if available
-              className="w-100 d-flex flex-column align-items-end"
+            <p
+              style={{
+                color: '#777777',
+                fontSize: '14px',
+                textWrap: 'nowrap',
+                fontWeight: '400',
+              }}
             >
-              <div
-                className="mt-2 p-3 w-25"
-                style={ {
-                  color: "#F3F3F3",
-                  fontSize: "13.33px",
-                  backgroundColor: "#75818D",
-                  borderRadius: "9.52px 0px 9.52px 9.52px",
-                } }
-              >
-                <p>{ msg.text }</p>
-              </div>
-              <div className="d-flex">
-                <p
-                  style={ {
-                    fontSize: "11.42px",
-                    fontWeight: "500",
-                    color: "#BABABA",
-                  } }
-                >
-                  { msg.timestamp }
-                  <img src="./doubleTick.svg" alt="" className="ms-2" />
-                </p>
-              </div>
-            </div>
-          ) ) }
-        </div>
-
-        <div
-          className=" m-auto"
-          style={ {
-            width: "70%",
-            zIndex: "1",
-            transform: "translateY(-80px) translateX(0%)",
-          } }
-        >
-          <div className="d-flex justify-content-between align-items-center bg-white rounded-3 m-auto p-2">
-            <input
-              type="text"
-              placeholder="Write A Message ..."
-              value={ message }
-              onChange={ handleMessageChange }
-            />
-            <img
-              src="./Chat Images/send button.svg"
-              alt=""
-              role="button"
-              onClick={ handleSendMessage }
-            />
+              {time}
+            </p>
           </div>
         </div>
       </div>
-    ) )
-    : null;
+    </Row>
+  );
+};
+const Chat = () => {
+  const [selectedUser, setSelectedUser] = useState(1);
+  const [inputMessage, setInputMessage] = useState('');
+  const users = [
+    { id: 1, name: 'Mohsin' },
+    { id: 2, name: 'Anas' },
+    // Add more users as needed
+  ];
 
-  const selectedUserDetails = users[ selectedUser ];
+  const [messages, setMessages] = useState({
+    1: {
+      received: [{ message: 'hello boy', time: '5 hours ago' }],
+      sent: [{ message: 'i am fine how are you', time: '5 hours ago' }],
+    },
+    1: {
+      received: [{ message: 'hello boy', time: '5 hours ago' }],
+      sent: [{ message: 'i am fine how are you', time: '5 hours ago' }],
+    },
+    // Add more messages for other users as needed
+  });
 
-  const selectedUserName = selectedUserDetails.name;
-  const selectedUserImage = selectedUserDetails.picture;
+  const handleUserClick = userId => {
+    setSelectedUser(userId);
+  };
+  const handleInputChange = e => {
+    setInputMessage(e.target.value);
+  };
+
+  const handleSendMessage = () => {
+    if (inputMessage.trim() === '') return;
+
+    const newMessage = { message: inputMessage, time: 'Now' };
+
+    setMessages(prevMessages => ({
+      ...prevMessages,
+      [selectedUser]: {
+        ...prevMessages[selectedUser],
+        sent: [...prevMessages[selectedUser].sent, newMessage],
+      },
+    }));
+
+    setInputMessage('');
+  };
   return (
     <>
-      <div>
-        <p
-          className="p-4"
-          style={ { color: "#4C4C4C", fontSize: "32px", fontWeight: "500" } }
+      <p
+        className='p-4'
+        style={{ color: '#4C4C4C', fontSize: '32px', fontWeight: '500' }}
+      >
+        Dashboard
+      </p>
+      <Row className='p-4'>
+        <Col
+          xl={3}
+          lg={3}
+          md={3}
+          className='bg-white'
+          style={{ height: '100vh', overflowY: 'auto' }}
         >
-          Chat
-        </p>
-      </div>
-      <div>
-        <div className="d-flex">
-          <div style={ { width: "20%", background: "#FFFFFF" } }>
-            <div
-              className="m-4 border  rounded-2 p-2 d-flex justify-content-between align-items-center"
-              style={ {
-                background: "#FFFFFF",
-              } }
+          <Row className='p-2'>
+            <div className='d-flex justify-content-between align-items-center border rounded-2 w-100 p-2'>
+              <input type='search' className='w-100 bg-transparent ' />
+              <img src='./searchicon.svg' alt='' />
+            </div>
+          </Row>
+          {users.map(user => (
+            <Row
+              key={user.id}
+              className={`d-flex justify-content-between align-item-center my-3 ${
+                selectedUser === user.id ? 'bg-light' : ''
+              }`}
+              onClick={() => handleUserClick(user.id)}
+              style={{ cursor: 'pointer' }}
             >
-              <input type="search" placeholder="Search " className="w-100" />
-              <img src="./Seacrh.svg" alt="" />
-            </div>
-            { users.map( ( user, index ) => (
-              <div
-                key={ index }
-                onClick={ () => handleUserClick( index ) }
-                className={ `d-flex justify-content-start align-items-center p-3 mt-1 border-bottom` }
-                style={ {
-                  cursor: "pointer",
-                  backgroundColor:
-                    selectedUser === index ? "#E9ECEF" : "#FFFFFF",
-                } }
-              >
+              <div className='d-flex justify-content-between align-item-center my-3'>
                 <div>
-                  <img src={ user.picture } alt="" />
+                  <img src='./PNG/UserImage.png' alt='' />
                 </div>
-                <div className="ms-3">
+                <div className='ms-2'>
                   <p
-                    style={ {
-                      color: "#75818D",
-                      fontSize: "15.59px",
-                      fontWeight: "600",
-                    } }
+                    style={{
+                      color: '#000000',
+                      fontSize: '12px',
+                      textWrap: 'nowrap',
+                      fontWeight: '400',
+                    }}
                   >
-                    { user.name }
+                    {user.name}
                   </p>
-                  <div className="d-flex justify-content-between align-items-center ">
-                    <div>
-                      <p
-                        style={ {
-                          color: "#75818D",
-                          fontSize: "11.7px",
-                          fontWeight: "600",
-                        } }
-                      >
-                        Ok i will be th...
-                      </p>
-                    </div>
-                    <div
-                      className="d-flex justify-content-center align-items-center  ms-5 text-nowrap"
-                      style={ {
-                        color: "#000000",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontSize: "14px",
-                      } }
-                    >
-                      2:09 PM
-                    </div>
-                  </div>
+                  <p
+                    style={{
+                      color: '#777777',
+                      fontSize: '12px',
+                      textWrap: 'nowrap',
+                    }}
+                  >
+                    Ok i will be there tomorrow{' '}
+                  </p>
+                </div>
+                <div>
+                  <p
+                    style={{
+                      color: '#000000',
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      textWrap: 'nowrap',
+                    }}
+                  >
+                    02:09 PM
+                  </p>
                 </div>
               </div>
-            ) ) }
-          </div>
-          <div style={ { width: "80%" } }>
-            <div>
+            </Row>
+          ))}
+          {/* <Row>
+            <div className='d-flex justify-content-between align-item-center my-3'>
               <div>
-                <div
-                  className="d-flex justify-content-between align-items-center mt-1 p-3 border"
-                  style={ { backgroundColor: "#FFFFFF" } }
-                >
-                  <div className="d-flex justify-content-center align-items-center">
-                    <img src={ selectedUserImage } alt="" className="me-2" />
-                    <p className="fs-6 me-5" style={ { color: "#75818D" } }>
-                      { selectedUserName }
-                    </p>
-                    <p style={ { color: "#ACB6BE" } }>
-                      { selectedUserDetails.header }
-                    </p>
-                  </div>
-                </div>
+                <img src='./PNG/UserImage.png' alt='' />
               </div>
-              { renderedContent }
+              <div className='ms-2'>
+                <p
+                  style={{
+                    color: '#000000',
+                    fontSize: '12px',
+                    textWrap: 'nowrap',
+                    fontWeight: '400',
+                  }}
+                >
+                  Mohsin
+                </p>
+                <p
+                  style={{
+                    color: '#777777',
+                    fontSize: '12px',
+                    textWrap: 'nowrap',
+                  }}
+                >
+                  Ok i will be there tomorrow{' '}
+                </p>
+              </div>
+              <div>
+                <p
+                  style={{
+                    color: '#000000',
+                    fontSize: '12px',
+                    fontWeight: '400',
+                    textWrap: 'nowrap',
+                  }}
+                >
+                  02:09 PM
+                </p>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </Row> */}
+        </Col>
+        <Col
+          xl={9}
+          lg={9}
+          md={9}
+          className='bg-white'
+          style={{ height: '100vh', overflowY: 'auto' }}
+        >
+          <Row className='border-bottom'>
+            <div className='d-flex ms-2 align-item-center my-3 w-50'>
+              <div>
+                <img src='./PNG/UserImage.png' alt='' />
+              </div>
+              <div className='ms-2'>
+                <p
+                  style={{
+                    color: '#000000',
+                    fontSize: '12px',
+                    textWrap: 'nowrap',
+                    fontWeight: '400',
+                  }}
+                >
+                  Mohsin
+                </p>
+                <p
+                  style={{
+                    color: '#777777',
+                    fontSize: '12px',
+                    textWrap: 'nowrap',
+                  }}
+                >
+                  Last seen at 12:30AM
+                </p>
+              </div>
+            </div>
+          </Row>
+          <Row>
+            <div className='d-flex align-items-center justify-content-center'>
+              <hr
+                className='flex-grow-1 mx-4'
+                style={{ borderColor: '#4C4C4C' }}
+              />
+              <p
+                style={{
+                  color: '#4E9C0B',
+                  fontSize: '12px',
+                  fontWeight: '400',
+                }}
+              >
+                Today 2:05 PM
+              </p>
+              <hr
+                className='flex-grow-1 mx-4'
+                style={{ borderColor: '#4C4C4C' }}
+              />
+            </div>
+          </Row>
+          <Row>
+            {selectedUser && (
+              <>
+                {/*  Receieved Message */}
+                <Row>
+                  {messages[selectedUser].received.map((msg, index) => (
+                    <Message
+                      key={index}
+                      message={msg.message}
+                      time={msg.time}
+                      sent={false}
+                    />
+                  ))}
+                </Row>
+                {/* Sent Message */}
+                <Row>
+                  {messages[selectedUser].sent.map((msg, index) => (
+                    <Message
+                      key={index}
+                      message={msg.message}
+                      time={msg.time}
+                      sent={true}
+                    />
+                  ))}
+                </Row>
+              </>
+            )}
+          </Row>
+          <Row className='p-2 '>
+            <div
+              className='shadow  rounded-5 d-flex justify-content-between align-items-center p-2'
+              style={{ backgroundColor: '#FAFAFA' }}
+            >
+              <input
+                type='text'
+                className='w-100 bg-transparent'
+                placeholder='Type a message...'
+                value={inputMessage}
+                onChange={handleInputChange}
+                onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
+              />
+              <img
+                src='./sendmessageicon.svg'
+                alt=''
+                style={{ cursor: 'pointer' }}
+                onClick={handleSendMessage}
+              />
+            </div>
+          </Row>
+        </Col>
+      </Row>
     </>
   );
 };

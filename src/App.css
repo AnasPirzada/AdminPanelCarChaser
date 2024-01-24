@@ -15,5 +15,9 @@ body {
   background-color: #F5F5F5 !important;
 }
 
+p {
+
+  margin-bottom: 0 !important;
+}
 
 @media (max-width: 768px) {}
